@@ -6,18 +6,14 @@ import genDiff from '../src/dif.js';
 
 const program = new Command();
 
-const obj1 = parse('./file1.json');
-const obj2 = parse('./file2.json');
-
 program
-  .version('0.0.1')
+  .version('0..0')
   .description('Usage: gendiff [options] <filepath1> <filepath2>')
   .description('Compares two configuration files and shows a difference.')
   .arguments('<filepath1> <filepath2>')
   .option('-f, --format [type]', 'output format')
-  .action(genDiff(obj1, obj2));
+  .action((filepath1, filepath2) => {
+    console.log(genDiff(parse(filepath1), parse(filepath2)));
+  });
 
 program.parse(process.argv);
-
-if (!program.args.length) program.help();
-console.log(process.argv);
