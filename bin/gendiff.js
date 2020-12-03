@@ -2,12 +2,12 @@
 
 import { Command } from 'commander';
 import parse from '../src/parser.js';
-import genDiff from '../src/dif.js';
+import genDiff from '../src/index.js';
 
 const program = new Command();
 
 program
-  .version('0..0')
+  .version('0.1.0')
   .description('Usage: gendiff [options] <filepath1> <filepath2>')
   .description('Compares two configuration files and shows a difference.')
   .arguments('<filepath1> <filepath2>')

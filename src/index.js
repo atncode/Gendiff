@@ -3,7 +3,7 @@ import _ from 'lodash';
 const genDiff = (obj1, obj2) => {
   const keys1 = _.keys(obj1);
   const keys2 = _.keys(obj2);
-  const keys = _.union(keys1, keys2);
+  const keys = _.union(keys1, keys2).sort();
 
   const dif = keys.reduce((acc, key) => {
     if (!_.has(obj1, key)) {
