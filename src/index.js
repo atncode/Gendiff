@@ -1,25 +1,19 @@
-import _ from 'lodash';
+import { fileURLToPath } from 'url';
+import path from 'path';
+import genDiff from './flatDiff.js';
+import buldAST from './nestedDiff.js';
+import parse from './parsers.js';
+import formatter from './stylish.js';
 
-const genDiff = (obj1, obj2) => {
-  const keys1 = _.keys(obj1);
-  const keys2 = _.keys(obj2);
-  const keys = _.union(keys1, keys2).sort();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+const obj1 = parse(getFixturePath('file1.json'));
+const obj2 = parse(getFixturePath('file2.json'));
 
-  const dif = keys.reduce((acc, key) => {
-    if (!_.has(obj1, key)) {
-      acc.push(`  + ${key}: ${obj2[key]}`);
-    } else if (!_.has(obj2, key)) {
-      acc.push(`  - ${key}: ${obj1[key]}`);
-    } else if (obj1[key] !== obj2[key]) {
-      acc.push(`  - ${key}: ${obj1[key]}`);
-      acc.push(`  + ${key}: ${obj2[key]}`);
-    } else {
-      acc.push(`    ${key}: ${obj1[key]}`);
-    }
-    return acc;
-  }, []);
+const ast = buldAST(obj1, obj2);
+const formattedFilesDifference = formatter(ast);
 
-  return `{\n${dif.join('\n')}\n}`;
-};
+const getFilesDifference = genDiff(obj1, obj2);
 
-export default genDiff;
+export { getFilesDifference, formattedFilesDifference };
