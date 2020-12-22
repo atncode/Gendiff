@@ -13,7 +13,6 @@ test('compare JSON files', () => {
   const ast = diff(parse(getFixturePath('file1.json')), parse(getFixturePath('file2.json')));
   const actual = formatter(ast);
   const expected = fs.readFileSync(getFixturePath('expected_file'), 'utf-8');
-  console.log(actual);
   expect(actual).toEqual(expected);
 });
 
@@ -21,6 +20,5 @@ test('compare YAML files', () => {
   const ast = diff(parse(getFixturePath('file1.yaml')), parse(getFixturePath('file2.yaml')));
   const actual = formatter(ast);
   const expected = fs.readFileSync(getFixturePath('expected_file'), 'utf-8');
-  console.log(actual);
   expect(actual).toEqual(expected);
 });

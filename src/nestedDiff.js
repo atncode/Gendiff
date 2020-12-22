@@ -38,23 +38,6 @@ const diff = (obj1, obj2) => {
         break;
     }
     return leaf;
-
-    // if ((value1 instanceof Object) && (value2 instanceof Object)) {
-    //   return { key, children: diff(value1, value2), state: 'nested' };
-    // }
-    // if (!_.has(obj1, key)) {
-    //   return { key, value: value2, state: 'added' };
-    // }
-    // if (!_.has(obj2, key)) {
-    //   return { key, value: value1, state: 'deleted' };
-    // }
-    // if (value1 === value2) {
-    //   return { key, value: value1, state: 'unchanged' };
-    // }
-    // if (value1 !== value2) {
-    //   return {
-    //     key, value1, value2, state: 'changed',
-    //   };
   });
 };
 
