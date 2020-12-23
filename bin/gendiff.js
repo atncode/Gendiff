@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 
-import { Command } from 'commander';
+import pkg from 'commander';
 import parse from '../src/parsers.js';
 import genDiff from '../src/index.js';
 
+const { Command } = pkg;
 const program = new Command();
 
 program
