@@ -1,5 +1,6 @@
 import stylish from './stylish.js';
 import plain from './plain.js';
+import json from './json.js';
 
 const getFormattedTree = (format, ast) => {
   switch (format) {
@@ -7,6 +8,8 @@ const getFormattedTree = (format, ast) => {
       return stylish(ast);
     case 'plain':
       return plain(ast);
+    case 'json':
+      return json(ast);
     default:
       throw new Error('Unknow formatter');
   }

@@ -1,4 +1,4 @@
-import buldAST from './nestedDiff.js';
+import buldAST from './diff.js';
 import getFormattedTree from './formatters/index.js';
 
 const genDiff = (obj1, obj2, format) => {

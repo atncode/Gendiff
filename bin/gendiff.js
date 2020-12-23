@@ -11,7 +11,7 @@ program
   .description('Usage: gendiff [options] <filepath1> <filepath2>')
   .description('Compares two configuration files and shows a difference.')
   .arguments('<filepath1> <filepath2>')
-  .option('-f, --format [type]', 'output format[stylish, plain]', 'stylish')
+  .option('-f, --format [type]', 'output format[stylish, plain, json]', 'stylish')
   .action((filepath1, filepath2) => {
     console.log(genDiff(parse(filepath1), parse(filepath2), program.format));
   });
