@@ -20,7 +20,7 @@ const diff = (obj1, obj2) => {
         break;
 
       case !_.has(obj2, key):
-        leaf = { key, value: value1, state: 'deleted' };
+        leaf = { key, value: value1, state: 'removed' };
         break;
 
       case value1 === value2:
@@ -29,12 +29,12 @@ const diff = (obj1, obj2) => {
 
       case value1 !== value2:
         leaf = {
-          key, value1, value2, state: 'changed',
+          key, value1, value2, state: 'updated',
         };
         break;
 
       default:
-        console.log('this state does not exists');
+        console.log('This state does not exists');
         break;
     }
     return leaf;
