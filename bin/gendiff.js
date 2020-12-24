@@ -14,7 +14,9 @@ program
   .arguments('<filepath1> <filepath2>')
   .option('-f, --format [type]', 'output format[stylish, plain, json]', 'stylish')
   .action((filepath1, filepath2) => {
-    console.log(genDiff(parse(filepath1), parse(filepath2), program.format));
+    const result = genDiff(parse(filepath1), parse(filepath2), program.format);
+    console.log(result);
+    return result;
   });
 
 program.parse(process.argv);
