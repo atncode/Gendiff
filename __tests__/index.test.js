@@ -2,39 +2,26 @@ import { fileURLToPath } from 'url';
 import fs from 'fs';
 import path from 'path';
 import parse from '../src/parsers.js';
-import diff from '../src/diff.js';
-import stylish from '../src/formatters/stylish.js';
-import plain from '../src/formatters/plain.js';
-import json from '../src/formatters/json.js';
+import diff from '../src/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 
-test('compare JSON files', () => {
-  const ast = diff(parse(getFixturePath('file1.json')), parse(getFixturePath('file2.json')));
-  const actual = stylish(ast);
-  const expected = fs.readFileSync(getFixturePath('expected_file'), 'utf-8');
-  expect(actual).toEqual(expected);
-});
+const stylish = fs.readFileSync(getFixturePath('stylish'), 'utf-8');
+const plain = fs.readFileSync(getFixturePath('plain'), 'utf-8');
+const json = fs.readFileSync(getFixturePath('json'), 'utf-8');
 
-test('compare YAML files', () => {
-  const ast = diff(parse(getFixturePath('file1.yaml')), parse(getFixturePath('file2.yaml')));
-  const actual = stylish(ast);
-  const expected = fs.readFileSync(getFixturePath('expected_file'), 'utf-8');
-  expect(actual).toEqual(expected);
-});
-
-test('plain', () => {
-  const ast = diff(parse(getFixturePath('file1.json')), parse(getFixturePath('file2.json')));
-  const actual = plain(ast);
-  const expected = fs.readFileSync(getFixturePath('expected_plain'), 'utf-8');
-  expect(actual).toEqual(expected);
-});
-
-test('json', () => {
-  const ast = diff(parse(getFixturePath('file1.json')), parse(getFixturePath('file2.json')));
-  const actual = json(ast);
-  const expected = fs.readFileSync(getFixturePath('expected.json'), 'utf-8');
-  expect(actual).toEqual(expected);
+test.each([
+  ['file1.json', 'file2.json'],
+  ['file1.yaml', 'file2.yaml'],
+  // ['file1.json', 'file2.json'],
+  // ['file1.json', 'file2.json'],
+])('check(%s, %s)', (filename1, filename2) => {
+  const path1 = getFixturePath(filename1);
+  const path2 = getFixturePath(filename2);
+  expect(diff(parse(path1), parse(path2), 'stylish')).toBe(stylish);
+  expect(diff(parse(path1), parse(path2), 'stylish')).toBe(stylish);
+  expect(diff(parse(path1), parse(path2), 'plain')).toBe(plain);
+  expect(diff(parse(path1), parse(path2), 'json')).toBe(json);
 });
