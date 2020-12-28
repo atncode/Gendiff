@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 import pkg from 'commander';
-import parse from '../src/parsers.js';
 import genDiff from '../src/index.js';
 
 const { Command } = pkg;
@@ -14,7 +13,7 @@ program
   .arguments('<filepath1> <filepath2>')
   .option('-f, --format [type]', 'output format[stylish, plain, json]', 'stylish')
   .action((filepath1, filepath2) => {
-    const result = genDiff(parse(filepath1), parse(filepath2), program.format);
+    const result = genDiff(filepath1, filepath2, program.format);
     console.log(result);
   });
 

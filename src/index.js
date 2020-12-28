@@ -1,8 +1,9 @@
 import buldAST from './diff.js';
 import getFormattedTree from './formatters/index.js';
+import parse from './parsers.js';
 
-const genDiff = (obj1, obj2, format) => {
-  const ast = buldAST(obj1, obj2);
+const genDiff = (filepath1, filepath2, format) => {
+  const ast = buldAST(parse(filepath1), parse(filepath2));
   return getFormattedTree(format, ast);
 };
 
