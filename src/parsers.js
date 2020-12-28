@@ -9,7 +9,7 @@ export default (filename) => {
   let data;
   if (format === '.json') {
     data = JSON.parse(file);
-  } else if (format === '.yaml') {
+  } else if (format === '.yaml' || format === '.yml') {
     data = yaml.safeLoad(file);
   }
   return data;
