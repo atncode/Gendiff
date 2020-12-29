@@ -5,9 +5,9 @@ const check = (value) => {
     case _.isObject(value):
       return '[complex value]';
 
-    case typeof value === 'boolean':
-    case typeof value === 'number':
-    case value === null:
+    case _.isBoolean(value):
+    case _.isNumber(value):
+    case _.isNull(value):
       return value;
 
     default:
@@ -17,26 +17,29 @@ const check = (value) => {
 
 const plain = (ast) => {
   const iter = (currentValue, accKeys) => {
-    const lines = currentValue.reduce((acc, obj) => {
-      const { key, value, state } = obj;
+    const lines = currentValue.flatMap((obj) => {
+      const {
+        key, value, value1, value2, state, children,
+      } = obj;
       const currentKey = accKeys.length === 0 ? key : `${accKeys}.${key}`;
-      if (state === 'nested') {
-        const { children } = obj;
-        acc.push(iter(children, `${currentKey}`));
+      switch (state) {
+        case 'nested':
+          return iter(children, `${currentKey}`);
+        case 'added':
+          return `Property '${currentKey}' was added with value: ${check(value)}`;
+        case 'removed':
+          return `Property '${currentKey}' was removed`;
+        case 'updated':
+          return `Property '${currentKey}' was updated. From ${check(value1)} to ${check(value2)}`;
+        case 'unchanged':
+          return 'without changes';
+        default:
+          throw new Error(`Unknown state ${state}!`);
       }
-      if (state === 'added') {
-        acc.push(`Property '${currentKey}' was added with value: ${check(value)}`);
-      }
-      if (state === 'removed') {
-        acc.push(`Property '${currentKey}' was removed`);
-      }
-      if (state === 'updated') {
-        const { value1, value2 } = obj;
-        acc.push(`Property '${currentKey}' was updated. From ${check(value1)} to ${check(value2)}`);
-      }
-      return [...acc];
-    }, []);
-    return [...lines].join('\n');
+    });
+    return lines
+      .filter((line) => line !== 'without changes')
+      .join('\n');
   };
   return iter(ast, '');
 };
