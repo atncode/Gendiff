@@ -1,11 +1,18 @@
+import _ from 'lodash';
+
 const check = (value) => {
-  if (value instanceof Object) {
-    return '[complex value]';
+  switch (true) {
+    case _.isObject(value):
+      return '[complex value]';
+
+    case typeof value === 'boolean':
+    case typeof value === 'number':
+    case value === null:
+      return value;
+
+    default:
+      return `'${value}'`;
   }
-  if (typeof value === 'boolean' || value === null || typeof value === 'number') {
-    return value;
-  }
-  return `'${value}'`;
 };
 
 const plain = (ast) => {
