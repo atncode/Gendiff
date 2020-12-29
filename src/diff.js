@@ -23,12 +23,9 @@ const diff = (obj1, obj2) => {
         key, value1, value2, state: 'updated',
       };
     }
-    if (value1 === value2) {
-      return {
-        key, value: value1, state: 'unchanged',
-      };
-    }
-    return 'unknown case';
+    return {
+      key, value: value1, state: 'unchanged',
+    };
   });
 };
 
