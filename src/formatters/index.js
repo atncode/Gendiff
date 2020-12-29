@@ -11,7 +11,7 @@ const getFormattedTree = (format, ast) => {
     case 'json':
       return json(ast);
     default:
-      throw new Error('Unknow formatter');
+      throw new Error(`Unknow formatter ${format}`);
   }
 };
 
