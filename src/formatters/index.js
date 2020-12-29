@@ -2,7 +2,7 @@ import stylish from './stylish.js';
 import plain from './plain.js';
 import json from './json.js';
 
-const getFormattedTree = (format, ast) => {
+const getFormattedTree = (format = 'stylish', ast) => {
   switch (format) {
     case 'stylish':
       return stylish(ast);
