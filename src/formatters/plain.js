@@ -1,18 +1,13 @@
 import _ from 'lodash';
 
-const check = (value) => {
-  switch (true) {
-    case _.isObject(value):
-      return '[complex value]';
-
-    case _.isBoolean(value):
-    case _.isNumber(value):
-    case _.isNull(value):
-      return value;
-
-    default:
-      return `'${value}'`;
+const stringify = (value) => {
+  if (_.isObject(value)) {
+    return '[complex value]';
   }
+  if (_.isString(value)) {
+    return `'${value}'`;
+  }
+  return value;
 };
 
 const plain = (ast) => {
@@ -26,19 +21,19 @@ const plain = (ast) => {
         case 'nested':
           return iter(children, `${currentKey}`);
         case 'added':
-          return `Property '${currentKey}' was added with value: ${check(value)}`;
+          return `Property '${currentKey}' was added with value: ${stringify(value)}`;
         case 'removed':
           return `Property '${currentKey}' was removed`;
         case 'updated':
-          return `Property '${currentKey}' was updated. From ${check(value1)} to ${check(value2)}`;
+          return `Property '${currentKey}' was updated. From ${stringify(value1)} to ${stringify(value2)}`;
         case 'unchanged':
-          return 'without changes';
+          return null;
         default:
           throw new Error(`Unknown state ${state}!`);
       }
     });
     return lines
-      .filter((line) => line !== 'without changes')
+      .filter((line) => line !== null)
       .join('\n');
   };
   return iter(ast, '');

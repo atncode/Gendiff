@@ -1,19 +1,19 @@
 import fs from 'fs';
 import path from 'path';
 import buldAST from './diff.js';
-import getFormattedTree from './formatters/index.js';
+import format from './formatters/index.js';
 import parse from './parsers.js';
 
-const getParsedFile = (filepath) => {
+const readFile = (filepath) => {
   const absolutePath = path.resolve(filepath);
-  const file = fs.readFileSync(absolutePath, 'utf-8');
-  const format = path.extname(filepath);
-  return parse(format, file);
+  const data = fs.readFileSync(absolutePath, 'utf-8');
+  const extension = path.extname(filepath).slice(1);
+  return parse(extension, data);
 };
 
-const genDiff = (filepath1, filepath2, format = 'stylish') => {
-  const ast = buldAST(getParsedFile(filepath1), getParsedFile(filepath2));
-  return getFormattedTree(format, ast);
+const genDiff = (filepath1, filepath2, outputformat = 'stylish') => {
+  const ast = buldAST(readFile(filepath1), readFile(filepath2));
+  return format(outputformat, ast);
 };
 
 export default genDiff;
