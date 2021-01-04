@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/reymezis/frontend-project-lvl2.git"
+    "url": "git+https://github.com/atncode/Gendiff.git"
   },
   "type": "module",
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/reymezis/frontend-project-lvl2/issues"
+    "url": "https://github.com/atncode/Gendiff/issues"
   },
-  "homepage": "https://github.com/reymezis/frontend-project-lvl2#readme",
+  "homepage": "https://github.com/atncode/Gendiff#readme",
   "jest": {
     "testEnvironment": "node",
     "transform": {}
